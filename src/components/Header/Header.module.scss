@@ -1,0 +1,51 @@
+@use '../../styles/utils/' as *;
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  background-color: red;
+  padding: 1rem;
+
+  background: #0f2027; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #2c5364,
+    #203a43,
+    #0f2027
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #2c5364,
+    #203a43,
+    #0f2027
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  box-shadow: $default-shadow;
+}
+
+.logo {
+  color: $light-grey;
+}
+
+.nav li a {
+  color: $light-grey;
+}
+
+.logo {
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 0.7rem;
+  list-style-type: none;
+}
+
+.nav li a:hover {
+  border-bottom: 2px solid $med-grey;
+  color: $light-grey;
+}

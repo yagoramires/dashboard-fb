@@ -14,4 +14,63 @@ body {
 
 section {
   @include flex-center;
+  padding: 2rem;
+}
+
+.active {
+  border-bottom: 2px solid $med-grey;
+  color: $med-grey;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+input {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid $med-grey;
+  padding: 0.5rem;
+}
+
+input.btn {
+  border-radius: 0.2rem;
+  border: none;
+  color: $light-grey;
+  background-color: $dark;
+}
+
+.form {
+  @include flex-center-col;
+  padding: 2rem;
+  row-gap: 1.5rem;
+
+  width: 500px;
+  @include md {
+    width: 600px;
+  }
+}
+
+.form label {
+  @include flex-center-col;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.form label span {
+  font-weight: 600;
+}
+
+section .error {
+  margin-top: 1rem;
+  color: #721c24;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  padding: 0.3rem;
+  border-radius: 0.25rem;
 }
