@@ -1,0 +1,17 @@
+@use './utils' as *;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  font-family: -apple-system, 'Poppins', sans-serif;
+}
+
+body {
+  min-height: 100vh;
+}
+
+section {
+  @include flex-center;
+}

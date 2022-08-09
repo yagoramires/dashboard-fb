@@ -1,0 +1,12 @@
+@use './variables' as *;
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-center-col {
+  @include flex-center;
+  flex-direction: column;
+}
