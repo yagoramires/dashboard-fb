@@ -1,0 +1,30 @@
+@use '../../../styles/utils/' as *;
+
+.registerIndustry {
+  flex-direction: column;
+  margin: 0 auto;
+  gap: 2rem;
+}
+
+.registerIndustry div  {
+  @include flex-center-col;
+  gap: 1rem;
+}
+
+.registerIndustry div p {
+  color: $med2-grey;
+  font-weight: 400;
+  font-size: 0.89rem;
+}
+
+.registerIndustry div h1 {
+  font-size: 2.2rem
+}
+
+.registerIndustry div span {
+  width: 100%;
+  font-size:.8rem;
+  text-align: right;
+  color: $dark;
+  cursor: pointer;
+}

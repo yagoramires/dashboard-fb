@@ -10,12 +10,15 @@ import Home from './pages/Home/Home';
 import Header from './components/Header/Header';
 import Login from './pages/Login/Login';
 // import Register from './pages/Register/Register';
-import NotFound from './pages/NotFound/NotFound';
+import NotFound from './pages/PageNotFound/NotFound';
 import { AuthProvider } from './context/AuthContext';
-import RegisterClient from './pages/RegisterClient/RegisterClient';
-import RegisterIndustry from './pages/RegisterIndustry/RegisterIndustry';
-import RegisterOrder from './pages/RegisterOrder/RegisterOrder';
-import RegisterProduct from './pages/RegisterProduct/RegisterProduct';
+import RegisterClient from './pages/Clients/RegisterClient/RegisterClient';
+import RegisterOrder from './pages/Orders/RegisterOrder/RegisterOrder';
+import RegisterProduct from './pages/Products/RegisterProduct/RegisterProduct';
+import Industries from './pages/Industries/Industries';
+import Industry from './pages/Industries/Industry/Industry';
+import RegisterIndustry from './pages/Industries/RegisterIndustry/RegisterIndustry';
+import SearchIndustries from './pages/Industries/SearchIndustries/SearchIndustries';
 
 function App() {
   const [user, setUser] = useState(undefined);
@@ -53,26 +56,65 @@ function App() {
             path='/login'
             element={user ? <Navigate to='/' /> : <Login />}
           />
+          {/* Pages */}
+          <Route
+            path='/orders'
+            element={!user ? <Navigate to='/login' /> : <Industries />}
+          />
+          <Route
+            path='/products'
+            element={!user ? <Navigate to='/login' /> : <Industries />}
+          />
+          <Route
+            path='/clients'
+            element={!user ? <Navigate to='/login' /> : <Industries />}
+          />
+          <Route
+            path='/industries'
+            element={!user ? <Navigate to='/login' /> : <Industries />}
+          />
+
+          {/* Individual Pages */}
+
+          <Route
+            path='/industries/:id'
+            element={!user ? <Navigate to='/login' /> : <Industry />}
+          />
+
+          {/* Search Pages */}
+
+          <Route
+            path='/industries/search'
+            element={!user ? <Navigate to='/login' /> : <SearchIndustries />}
+          />
+
+          {/* Individual Pages */}
+
+          <Route
+            path='/industries/:id'
+            element={!user ? <Navigate to='/login' /> : <Industry />}
+          />
+
           {/* Register Pages */}
           {/* <Route
               path='/register/user'
               element={user ? <Navigate to='/' /> : <Register />}
             /> */}
           <Route
-            path='/register/client'
-            element={!user ? <Navigate to='/login' /> : <RegisterClient />}
-          />
-          <Route
-            path='/register/industry'
-            element={!user ? <Navigate to='/login' /> : <RegisterIndustry />}
-          />
-          <Route
-            path='/register/order'
+            path='/orders/new'
             element={!user ? <Navigate to='/login' /> : <RegisterOrder />}
           />
           <Route
-            path='/register/product'
+            path='/products/new'
             element={!user ? <Navigate to='/login' /> : <RegisterProduct />}
+          />
+          <Route
+            path='/clients/new'
+            element={!user ? <Navigate to='/login' /> : <RegisterClient />}
+          />
+          <Route
+            path='/industries/new'
+            element={!user ? <Navigate to='/login' /> : <RegisterIndustry />}
           />
           {/* <Route
             path='/profile'

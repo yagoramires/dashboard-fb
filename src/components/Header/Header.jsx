@@ -26,9 +26,21 @@ const Header = () => {
             <li>
               <NavLink to='/'>Home</NavLink>
             </li>
-            <li>
-              <NavLink to='/register/industry'>Novo</NavLink>
+            {/* <li>
+              <NavLink to='/orders'>Pedidos</NavLink>
             </li>
+            <li>
+              <NavLink to='/products'>Produtos</NavLink>
+            </li>
+            <li>
+              <NavLink to='/clients'>Clientes</NavLink>
+            </li> */}
+            <li>
+              <NavLink to='/industries'>Indústrias</NavLink>
+            </li>
+            {/* <li>
+              <NavLink to='/register/industry'>Novo</NavLink>
+            </li> */}
             <li>
               <span onClick={handleLogout} className={styles.logout}>
                 Sair

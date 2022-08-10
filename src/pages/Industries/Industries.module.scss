@@ -1,0 +1,35 @@
+@use '../../styles/utils/' as *;
+
+.industries {
+  @include flex-center-col;
+  gap: 2rem;
+}
+
+.industries h1 {
+  font-size: 2.2rem;
+  color: $dark;
+}
+
+.industries div button {
+  max-width: 100px;
+}
+
+.industries div {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.industries form {
+  display: flex;
+  gap: 1rem;
+  width: 90%;
+
+  @include md {
+    max-width: 500px;
+  }
+}
+
+.industries form input:nth-of-type(2) {
+  width: 100px;
+}

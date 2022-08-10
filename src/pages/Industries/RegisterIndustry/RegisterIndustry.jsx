@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useInsertIndustry } from '../../hooks/useInsertIndustry';
+import { useInsertIndustry } from '../../../hooks/useInsertIndustry';
 
 import styles from './RegisterIndustry.module.scss';
 
@@ -34,8 +34,13 @@ const RegisterIndustry = () => {
 
   return (
     <section className={styles.registerIndustry}>
-      <h1>Cadastrar Intustria</h1>
-      <p>Preencha os dados abaixo para cadastrar novas industrias</p>
+      <div>
+        <span onClick={() => navigate('/industries')}>Voltar</span>
+
+        <h1>Cadastrar Intustria</h1>
+
+        <p>Preencha os dados abaixo para cadastrar novas industrias</p>
+      </div>
       <form onSubmit={handleSubmit} className='form'>
         <label>
           <span>Razão Social:</span>

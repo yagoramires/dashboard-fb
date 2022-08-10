@@ -31,14 +31,16 @@ a {
   text-decoration: none;
 }
 
-input {
+input,
+button {
   width: 100%;
   border: none;
   border-bottom: 1px solid $med-grey;
   padding: 0.5rem;
 }
 
-input.btn {
+input.btn,
+.btn {
   border-radius: 0.2rem;
   border: none;
   color: $light-grey;
@@ -74,4 +76,52 @@ section .error {
   border: 1px solid #f5c6cb;
   padding: 0.3rem;
   border-radius: 0.25rem;
+}
+
+.nopost {
+  @include flex-center-col;
+  gap: 2rem;
+}
+
+.table {
+  width: 100%;
+  table-layout: fixed;
+  max-width: 1120px;
+  min-height: 100%;
+  margin-top: 2rem;
+  border-collapse: collapse;
+  overflow: hidden;
+  border: solid transparent 1px;
+  -webkit-border-radius: 0.2rem;
+  -moz-border-radius: 0.2rem;
+  border-radius: 0.2rem;
+}
+
+.table th {
+  background-color: $dark;
+  color: #fff;
+  padding: 0.5rem;
+  text-align: center;
+}
+
+.table td {
+  text-align: center;
+  padding: 0.5rem 1rem;
+  background-color: $light-grey;
+  color: $med;
+  font-weight: 500;
+}
+
+.table td:nth-of-type(1) {
+  text-align: left;
+}
+
+.table a {
+  padding: 0.5rem;
+  font-weight: 600;
+  color: $dark;
+}
+
+.table a:hover {
+  color: $light;
 }

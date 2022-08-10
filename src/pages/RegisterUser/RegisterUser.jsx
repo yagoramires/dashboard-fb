@@ -3,9 +3,9 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 
 // styles
-import styles from './Register.module.scss';
+import styles from './RegisterUser.module.scss';
 
-const Register = () => {
+const RegisterUser = () => {
   const [displayName, setDisplayName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -97,4 +97,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default RegisterUser;
