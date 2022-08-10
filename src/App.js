@@ -12,6 +12,10 @@ import Login from './pages/Login/Login';
 // import Register from './pages/Register/Register';
 import NotFound from './pages/NotFound/NotFound';
 import { AuthProvider } from './context/AuthContext';
+import RegisterClient from './pages/RegisterClient/RegisterClient';
+import RegisterIndustry from './pages/RegisterIndustry/RegisterIndustry';
+import RegisterOrder from './pages/RegisterOrder/RegisterOrder';
+import RegisterProduct from './pages/RegisterProduct/RegisterProduct';
 
 function App() {
   const [user, setUser] = useState(undefined);
@@ -39,21 +43,40 @@ function App() {
       <AuthProvider value={{ user }}>
         <Header />
         <Routes>
+          {/* Home Page */}
           <Route
             path='/'
             element={!user ? <Navigate to='/login' /> : <Home />}
           />
+          {/* Login Page */}
           <Route
             path='/login'
             element={user ? <Navigate to='/' /> : <Login />}
           />
+          {/* Register Pages */}
+          {/* <Route
+              path='/register/user'
+              element={user ? <Navigate to='/' /> : <Register />}
+            /> */}
+          <Route
+            path='/register/client'
+            element={!user ? <Navigate to='/login' /> : <RegisterClient />}
+          />
+          <Route
+            path='/register/industry'
+            element={!user ? <Navigate to='/login' /> : <RegisterIndustry />}
+          />
+          <Route
+            path='/register/order'
+            element={!user ? <Navigate to='/login' /> : <RegisterOrder />}
+          />
+          <Route
+            path='/register/product'
+            element={!user ? <Navigate to='/login' /> : <RegisterProduct />}
+          />
           {/* <Route
             path='/profile'
             element={user ? <Navigate to='/' /> : <Profile />}
-          /> */}
-          {/* <Route
-            path='/register'
-            element={user ? <Navigate to='/' /> : <Register />}
           /> */}
           <Route path='*' element={<NotFound />} />
         </Routes>
