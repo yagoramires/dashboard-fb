@@ -4,9 +4,7 @@ import { db } from '../firebase/config'; // importa o DB do firebase
 import {
   getAuth, // metodo de auth
   createUserWithEmailAndPassword, // cria usuario com email e senha
-  signInWithEmailAndPassword, // loga com email e senha
   updateProfile, // atualiza o perfil
-  signOut, //realiza logout
 } from 'firebase/auth';
 
 import { useState, useEffect } from 'react';
@@ -26,7 +24,7 @@ export const useAuth = () => {
     }
   }; // verifica se o canceled está true, caso esteja para a função
 
-  const createUser = async (data) => {
+  const createUser = async (userData) => {
     checkCanceled(); // chama a funcao e verifica se está cancelado
     setLoading(true);
 
@@ -34,13 +32,13 @@ export const useAuth = () => {
       const { user } = await createUserWithEmailAndPassword(
         // funcao para criar usuario no firebase
         auth, // necessário passar a autenticacao
-        data.email, // email recebido do form
-        data.password, // senha recebida do form
+        userData.email, // email recebido do form
+        userData.password, // senha recebida do form
       );
 
       await updateProfile(user, {
-        displayName: data.displayName,
-      }); // atualiza o perfil com o objeto user criado acima + o display name recebido de data (form)
+        displayName: userData.displayName,
+      }); // atualiza o perfil com o objeto user criado acima + o display name recebido de userData (form)
 
       setLoading(false);
       return user; // retorna o user

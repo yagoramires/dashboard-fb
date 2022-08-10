@@ -49,3 +49,10 @@
   border-bottom: 2px solid $med-grey;
   color: $light-grey;
 }
+
+.logout {
+  background-color: $light-grey;
+  font-weight: 600;
+  padding: 0.2rem 0.4rem;
+  cursor: pointer;
+}
