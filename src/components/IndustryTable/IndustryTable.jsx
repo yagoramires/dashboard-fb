@@ -1,7 +1,6 @@
 import { useNavigate, Link } from 'react-router-dom';
 
-const IndustryTable = ({industries}) => {
-
+const IndustryTable = ({ industries }) => {
   const navigate = useNavigate();
 
   const cnpjEdit = (cnpj) => {
@@ -23,9 +22,11 @@ const IndustryTable = ({industries}) => {
 
   return (
     <>
-  
-    {industries && (
+      {industries && (
         <div>
+          <button onClick={() => navigate('/industries/new')} className='btn'>
+            Cadastrar
+          </button>
           <table className='table'>
             <thead>
               <tr>
@@ -52,7 +53,7 @@ const IndustryTable = ({industries}) => {
         </div>
       )}
     </>
-  )
-}
+  );
+};
 
-export default IndustryTable
+export default IndustryTable;

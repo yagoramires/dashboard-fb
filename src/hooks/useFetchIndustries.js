@@ -7,10 +7,10 @@ import {
   query, // buscar o dado
   orderBy, // ordena os dados
   onSnapshot, // mapeia os dados, sempre que ha uma alteracao nos dados ele atualiza
-  where, // faz um filtro dos dados
+  // where, // faz um filtro dos dados
 } from 'firebase/firestore';
 
-export const useFetchIndustries = (docCollection, search = null) => {
+export const useFetchIndustries = (docCollection) => {
   const [industries, setIndustries] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(null);
@@ -26,19 +26,8 @@ export const useFetchIndustries = (docCollection, search = null) => {
 
       try {
         let q;
-        let searchFormat;
 
-        if (search) {
-          searchFormat = search.toUpperCase();
-
-          q = await query(
-            collectionRef,
-            where('fantasyName', '==', searchFormat),
-            orderBy('createdAt')
-          );
-        } else {
-          q = await query(collectionRef, orderBy('createdAt'));
-        }
+        q = await query(collectionRef, orderBy('createdAt'));
 
         await onSnapshot(q, (querySnapshot) => {
           // faz o mapeamento dos dados, ou seja atualiza quando ha alteracoes
@@ -46,7 +35,7 @@ export const useFetchIndustries = (docCollection, search = null) => {
             querySnapshot.docs.map((doc) => ({
               id: doc.id, // traz o id
               ...doc.data(), // traz os dados inseridos no banco
-            })) // define os doc com o objeto mapeado
+            })), // define os doc com o objeto mapeado
           );
         });
         setLoading(false);
@@ -56,9 +45,7 @@ export const useFetchIndustries = (docCollection, search = null) => {
       }
     }
     loadIndustries();
-  }, [docCollection, search, canceled]);
-
-  console.log(industries);
+  }, [docCollection, canceled]);
 
   useEffect(() => {
     return () => setCanceled(true);

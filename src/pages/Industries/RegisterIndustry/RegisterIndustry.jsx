@@ -37,7 +37,7 @@ const RegisterIndustry = () => {
       <div>
         <span onClick={() => navigate('/industries')}>Voltar</span>
 
-        <h1>Cadastrar Intustria</h1>
+        <h1>Cadastrar Indústria</h1>
 
         <p>Preencha os dados abaixo para cadastrar novas industrias</p>
       </div>

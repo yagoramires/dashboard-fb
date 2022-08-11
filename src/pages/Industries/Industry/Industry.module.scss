@@ -1,1 +1,14 @@
 @use '../../../styles/utils/' as *;
+
+.industry {
+  @include flex-center-col;
+  align-items: flex-start;
+}
+
+.industry div {
+  margin-top: 2rem;
+  align-self: center;
+  @include flex-center;
+  gap: 1rem;
+  width: 200px;
+}

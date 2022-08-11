@@ -18,7 +18,7 @@ import RegisterProduct from './pages/Products/RegisterProduct/RegisterProduct';
 import Industries from './pages/Industries/Industries';
 import Industry from './pages/Industries/Industry/Industry';
 import RegisterIndustry from './pages/Industries/RegisterIndustry/RegisterIndustry';
-import SearchIndustries from './pages/Industries/SearchIndustries/SearchIndustries';
+import EditIndustry from './pages/Industries/EditIndustry/EditIndustry';
 
 function App() {
   const [user, setUser] = useState(undefined);
@@ -46,17 +46,20 @@ function App() {
       <AuthProvider value={{ user }}>
         <Header />
         <Routes>
-          {/* Home Page */}
-          <Route
-            path='/'
-            element={!user ? <Navigate to='/login' /> : <Home />}
-          />
           {/* Login Page */}
           <Route
             path='/login'
             element={user ? <Navigate to='/' /> : <Login />}
           />
+          {/* <Route
+              path='/register/user'
+              element={user ? <Navigate to='/' /> : <Register />}
+            /> */}
           {/* Pages */}
+          <Route
+            path='/'
+            element={!user ? <Navigate to='/login' /> : <Home />}
+          />
           <Route
             path='/orders'
             element={!user ? <Navigate to='/login' /> : <Industries />}
@@ -81,25 +84,15 @@ function App() {
             element={!user ? <Navigate to='/login' /> : <Industry />}
           />
 
-          {/* Search Pages */}
+          {/* Edit Pages */}
 
           <Route
-            path='/industries/search'
-            element={!user ? <Navigate to='/login' /> : <SearchIndustries />}
-          />
-
-          {/* Individual Pages */}
-
-          <Route
-            path='/industries/:id'
-            element={!user ? <Navigate to='/login' /> : <Industry />}
+            path='/industries/edit/:id'
+            element={!user ? <Navigate to='/login' /> : <EditIndustry />}
           />
 
           {/* Register Pages */}
-          {/* <Route
-              path='/register/user'
-              element={user ? <Navigate to='/' /> : <Register />}
-            /> */}
+
           <Route
             path='/orders/new'
             element={!user ? <Navigate to='/login' /> : <RegisterOrder />}

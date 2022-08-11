@@ -48,6 +48,15 @@ input.btn,
   cursor: pointer;
 }
 
+.btn-danger {
+  background-color: #dc3545;
+}
+
+.btn-danger:hover {
+  background-color: #f14f5f;
+  font-weight: 600;
+}
+
 .form {
   @include flex-center-col;
   padding: 2rem;
@@ -105,15 +114,15 @@ section .error {
 }
 
 .table td {
-  text-align: center;
+  text-align: left;
   padding: 0.5rem 1rem;
   background-color: $light-grey;
   color: $med;
   font-weight: 500;
 }
 
-.table td:nth-of-type(1) {
-  text-align: left;
+.table td:last-child {
+  text-align: center;
 }
 
 .table a {

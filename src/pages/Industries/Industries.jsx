@@ -1,12 +1,15 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { useFetchIndustries } from '../../hooks/useFetchIndustries';
+
+import IndustryTable from '../../components/IndustryTable/IndustryTable';
 
 import styles from './Industries.module.scss';
 
 const Industries = () => {
   const [query, setQuery] = useState();
+  const [searchResult, setSearchResult] = useState('');
 
   const navigate = useNavigate();
 
@@ -14,27 +17,30 @@ const Industries = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setSearchResult('');
 
     if (query) {
-      return navigate(`/industries/search?q=${query}`)
+      const searchFantasy = industries.filter((industry) =>
+        industry.fantasyName.toLowerCase().includes(query.toLowerCase()),
+      );
+      const searchSocial = industries.filter((industry) =>
+        industry.socialName.toLowerCase().includes(query.toLowerCase()),
+      );
+      const searchCnpj = industries.filter((industry) =>
+        industry.cnpj.includes(
+          query.normalize('NFD').replace(/([\u0300-\u036f]|[^0-9a-zA-Z])/g, ''),
+        ),
+      );
+
+      if (searchFantasy.length > 0) {
+        setSearchResult(searchFantasy);
+      } else if (searchSocial.length > 0) {
+        setSearchResult(searchSocial);
+      } else if (searchCnpj.length > 0) {
+        setSearchResult(searchCnpj);
+      }
     }
-  };
-
-  const cnpjEdit = (cnpj) => {
-    cnpj = cnpj.replace(/\D/g, '');
-
-    if (cnpj.length <= 11) {
-      cnpj = cnpj.replace(/(\d{3})(\d)/, '$1.$2');
-      cnpj = cnpj.replace(/(\d{3})(\d)/, '$1.$2');
-      cnpj = cnpj.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
-    } else {
-      cnpj = cnpj.replace(/^(\d{2})(\d)/, '$1.$2');
-      cnpj = cnpj.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
-      cnpj = cnpj.replace(/\.(\d{3})(\d)/, '.$1/$2');
-      cnpj = cnpj.replace(/(\d{4})(\d)/, '$1-$2');
-    }
-
-    return cnpj;
+    setQuery('');
   };
 
   if (loading)
@@ -66,35 +72,24 @@ const Industries = () => {
         </div>
       )}
 
-      {industries && (
-        <div>
-          <button onClick={() => navigate('/industries/new')} className='btn'>
-            Cadastrar
-          </button>
-          <table className='table'>
-            <thead>
-              <tr>
-                <th>Razão Social</th>
-                <th>CNPJ</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
+      {searchResult && searchResult.length > 0 && (
+        <>
+          <p onClick={() => setSearchResult('')}>Limpar Busca</p>
+          <IndustryTable industries={searchResult} />
+        </>
+      )}
 
-            <tbody>
-              {industries &&
-                industries.map((industry) => (
-                  <tr key={industry.id}>
-                    <td>{industry.fantasyName}</td>
-                    <td>{cnpjEdit(industry.cnpj)}</td>
-                    <td>
-                      <Link to={`/industries/${industry.id}`}>Ver</Link>
-                      <Link to={`/industries/edit/${industry.id}`}>Editar</Link>
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
-        </div>
+      {searchResult && searchResult.length === 0 && (
+        <>
+          <p onClick={() => setSearchResult('')}>Limpar Busca</p>
+          <p>Nenhum resultado encontrado</p>
+        </>
+      )}
+
+      {industries && !searchResult && (
+        <>
+          <IndustryTable industries={industries} />
+        </>
       )}
     </section>
   );
