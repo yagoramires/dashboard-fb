@@ -6,6 +6,7 @@
   box-sizing: border-box;
 
   font-family: -apple-system, 'Poppins', sans-serif;
+  color: $dark;
 }
 
 body {
@@ -119,6 +120,7 @@ section .error {
   background-color: $light-grey;
   color: $med;
   font-weight: 500;
+  border-bottom: 1px solid rgb(255, 255, 255);
 }
 
 .table td:last-child {
@@ -133,4 +135,8 @@ section .error {
 
 .table a:hover {
   color: $light;
+}
+
+.cleanSearch {
+  cursor: pointer;
 }

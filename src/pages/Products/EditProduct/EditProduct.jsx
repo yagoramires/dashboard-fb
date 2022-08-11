@@ -1,12 +1,18 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+
+import { useUpdateProduct } from '../../../hooks/useUpdateProduct';
+import { useFetchProduct } from '../../../hooks/useFetchProduct';
+
+import styles from './EditProduct.module.scss';
+import { useEffect } from 'react';
+import { useDeleteDocument } from '../../../hooks/useDeleteDocument';
 import { useFetchIndustries } from '../../../hooks/useFetchIndustries';
 
-import { useInsertProduct } from '../../../hooks/useInsertProduct';
+const EditProduct = () => {
+  const { id } = useParams();
+  const { product, loading } = useFetchProduct('products', id);
 
-import styles from './RegisterProduct.module.scss';
-
-const RegisterProduct = () => {
   const [industry, setIndustry] = useState('selecione');
   const [productImage, setProductImage] = useState('');
   const [productName, setProductName] = useState('');
@@ -15,11 +21,29 @@ const RegisterProduct = () => {
   const [productPrice, setProductPrice] = useState('');
   const [error, setError] = useState('');
 
-  const navigate = useNavigate();
-
   const { industries } = useFetchIndustries('industries');
 
-  const { insertProduct, response } = useInsertProduct('products');
+  useEffect(() => {
+    if (product) {
+      setIndustry(product.industry);
+      setProductImage(product.productImage);
+      setProductName(product.productName);
+      setProductModel(product.productModel);
+      setProductCode(product.productCode);
+      setProductPrice(product.productPrice);
+    }
+  }, [product]);
+
+  const { deleteDocument } = useDeleteDocument('products');
+
+  const navigate = useNavigate();
+
+  const handleDelete = () => {
+    deleteDocument(id);
+    navigate(`/products/`);
+  };
+
+  const { updateProduct, response } = useUpdateProduct('products');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -38,16 +62,16 @@ const RegisterProduct = () => {
 
     // check all values
     if (
-      !industry ||
-      !productModel ||
+      // !industry ||
       !productName ||
+      !productModel ||
       !productCode ||
       !productPrice
     ) {
       setError('Por favor, preencha todos os campos!');
     }
 
-    insertProduct({
+    updateProduct(id, {
       industry,
       productImage,
       productName,
@@ -61,19 +85,33 @@ const RegisterProduct = () => {
     navigate('/products');
   };
 
+  if (loading) {
+    return (
+      <section>
+        <p>Carregando ...</p>
+      </section>
+    );
+  }
+
   return (
-    <section className={styles.RegisterProduct}>
+    <section className={styles.editProduct}>
       <div>
-        <span onClick={() => navigate('/products')}>Voltar</span>
+        <h1>Editar produto</h1>
 
-        <h1>Cadastrar Produto</h1>
-
-        <p>Preencha os dados abaixo para cadastrar novos produtos</p>
+        <p>Altere os dados abaixo</p>
       </div>
       <form onSubmit={handleSubmit} className='form'>
         <label>
+          {product && (
+            <img src={product.productImage} alt={product.productName} />
+          )}
+        </label>
+        <label>
           <span>Indústria:</span>
-          <select onChange={(e) => setIndustry(e.target.value)}>
+          <select
+            onChange={(e) => setIndustry(e.target.value)}
+            value={industry}
+          >
             <option value='select'>Selecione </option>
             {industries &&
               industries.map((industry) => (
@@ -83,15 +121,15 @@ const RegisterProduct = () => {
               ))}
           </select>
         </label>
+
         <label>
-          <span>URL da imagem:</span>
+          <span>URL da imagem do produto:</span>
           <input
             type='text'
             name='productImage'
             value={productImage}
             onChange={(e) => setProductImage(e.target.value)}
-            placeholder='Digite o URL da imagem do produto'
-            required
+            placeholder='Digite o URL do produto'
           />
         </label>
         <label>
@@ -140,16 +178,25 @@ const RegisterProduct = () => {
         </label>
 
         {!response.loading && (
-          <input type='submit' value='Cadastrar' className='btn' />
+          <input type='submit' value='Alterar' className='btn' />
         )}
         {response.loading && (
-          <input type='submit' value='Cadastrando' className='btn' disabled />
+          <input type='submit' value='Alterando' className='btn' disabled />
         )}
         {response.error && <p className='error'>{response.error}</p>}
         {error && <p className='error'>{error}</p>}
       </form>
+
+      <div className={styles.buttonsContainer}>
+        <button onClick={() => navigate(`/products/${id}`)} className='btn '>
+          Voltar
+        </button>
+        <button onClick={handleDelete} className='btn btn-danger'>
+          Excluir
+        </button>
+      </div>
     </section>
   );
 };
 
-export default RegisterProduct;
+export default EditProduct;

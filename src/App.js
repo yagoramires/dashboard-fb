@@ -20,6 +20,9 @@ import Industry from './pages/Industries/Industry/Industry';
 import RegisterIndustry from './pages/Industries/RegisterIndustry/RegisterIndustry';
 import EditIndustry from './pages/Industries/EditIndustry/EditIndustry';
 import { FormatProvider } from './context/formatContext';
+import Products from './pages/Products/Products';
+import EditProduct from './pages/Products/EditProduct/EditProduct';
+import Product from './pages/Products/Product/Product';
 
 function App() {
   const [user, setUser] = useState(undefined);
@@ -68,7 +71,7 @@ function App() {
             />
             <Route
               path='/products'
-              element={!user ? <Navigate to='/login' /> : <Industries />}
+              element={!user ? <Navigate to='/login' /> : <Products />}
             />
             <Route
               path='/clients'
@@ -86,11 +89,31 @@ function App() {
               element={!user ? <Navigate to='/login' /> : <Industry />}
             />
 
+            <Route
+              path='/products/:id'
+              element={!user ? <Navigate to='/login' /> : <Product />}
+            />
+
+            <Route
+              path='/clients/:id'
+              element={!user ? <Navigate to='/login' /> : <Product />}
+            />
+
             {/* Edit Pages */}
 
             <Route
               path='/industries/edit/:id'
               element={!user ? <Navigate to='/login' /> : <EditIndustry />}
+            />
+
+            <Route
+              path='/products/edit/:id'
+              element={!user ? <Navigate to='/login' /> : <EditProduct />}
+            />
+
+            <Route
+              path='/clients/edit/:id'
+              element={!user ? <Navigate to='/login' /> : <EditProduct />}
             />
 
             {/* Register Pages */}

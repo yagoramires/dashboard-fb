@@ -1,43 +1,41 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useFetchIndustries } from '../../hooks/useFetchIndustries';
+import { useFetchProducts } from '../../hooks/useFetchProducts';
 
-import IndustryTable from '../../components/IndustryTable/IndustryTable';
+import ProductsTable from '../../components/ProductsTable/ProductsTable';
 
-import styles from './Industries.module.scss';
+import styles from './Products.module.scss';
 
-const Industries = () => {
+const Products = () => {
   const [query, setQuery] = useState();
   const [searchResult, setSearchResult] = useState('');
 
   const navigate = useNavigate();
 
-  const { industries, loading } = useFetchIndustries('industries');
+  const { products, loading } = useFetchProducts('products');
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setSearchResult('');
 
     if (query) {
-      const searchFantasy = industries.filter((industry) =>
-        industry.fantasyName.toLowerCase().includes(query.toLowerCase()),
+      const searchName = products.filter((product) =>
+        product.productName.toLowerCase().includes(query.toLowerCase()),
       );
-      const searchSocial = industries.filter((industry) =>
-        industry.socialName.toLowerCase().includes(query.toLowerCase()),
+      const searchCode = products.filter((product) =>
+        product.productCode.toLowerCase().includes(query.toLowerCase()),
       );
-      const searchCnpj = industries.filter((industry) =>
-        industry.cnpj.includes(
-          query.normalize('NFD').replace(/([\u0300-\u036f]|[^0-9a-zA-Z])/g, ''),
-        ),
+      const searchModel = products.filter((product) =>
+        product.productModel.toLowerCase().includes(query.toLowerCase()),
       );
 
-      if (searchFantasy.length > 0) {
-        setSearchResult(searchFantasy);
-      } else if (searchSocial.length > 0) {
-        setSearchResult(searchSocial);
-      } else if (searchCnpj.length > 0) {
-        setSearchResult(searchCnpj);
+      if (searchName.length > 0) {
+        setSearchResult(searchName);
+      } else if (searchCode.length > 0) {
+        setSearchResult(searchCode);
+      } else if (searchModel.length > 0) {
+        setSearchResult(searchModel);
       }
     }
     setQuery('');
@@ -51,22 +49,22 @@ const Industries = () => {
     );
 
   return (
-    <section className={styles.industries}>
-      <h1>Indústrias</h1>
+    <section className={styles.products}>
+      <h1>Produtos</h1>
       <form onSubmit={handleSubmit} className={styles.form}>
         <input
           type='text'
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder='Pesquise por indústrias'
+          placeholder='Pesquise por produtos'
         />
         <input type='submit' value='Buscar' className='btn' />
       </form>
 
-      {!industries && (
+      {!products && (
         <div className='nopost'>
           <p>Nenhuma indústria cadatrada.</p>
-          <button onClick={() => navigate('/industries/new')} className='btn'>
+          <button onClick={() => navigate('/products/new')} className='btn'>
             Cadastrar
           </button>
         </div>
@@ -77,7 +75,7 @@ const Industries = () => {
           <p onClick={() => setSearchResult('')} className='cleanSearch'>
             Limpar Busca
           </p>
-          <IndustryTable industries={searchResult} />
+          <ProductsTable products={searchResult} />
         </>
       )}
 
@@ -90,13 +88,13 @@ const Industries = () => {
         </>
       )}
 
-      {industries && !searchResult && (
+      {products && !searchResult && (
         <>
-          <IndustryTable industries={industries} />
+          <ProductsTable products={products} />
         </>
       )}
     </section>
   );
 };
 
-export default Industries;
+export default Products;

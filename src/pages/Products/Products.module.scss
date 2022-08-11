@@ -1,0 +1,35 @@
+@use '../../styles/utils/' as *;
+
+.products {
+  @include flex-center-col;
+  gap: 2rem;
+}
+
+.products h1 {
+  font-size: 2.2rem;
+  color: $dark;
+}
+
+.products div button {
+  max-width: 100px;
+}
+
+.products div {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.products form {
+  display: flex;
+  gap: 1rem;
+  width: 90%;
+
+  @include md {
+    max-width: 500px;
+  }
+}
+
+.products form input:nth-of-type(2) {
+  width: 100px;
+}

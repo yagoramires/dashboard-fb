@@ -26,7 +26,7 @@ const Header = () => {
             <li>
               <NavLink to='/'>Home</NavLink>
             </li>
-            {/* <li>
+            <li>
               <NavLink to='/orders'>Pedidos</NavLink>
             </li>
             <li>
@@ -34,7 +34,7 @@ const Header = () => {
             </li>
             <li>
               <NavLink to='/clients'>Clientes</NavLink>
-            </li> */}
+            </li>
             <li>
               <NavLink to='/industries'>Indústrias</NavLink>
             </li>
