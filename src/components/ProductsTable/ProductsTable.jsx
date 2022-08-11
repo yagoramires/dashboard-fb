@@ -13,9 +13,10 @@ const ProductsTable = ({ products }) => {
           <table className='table'>
             <thead>
               <tr>
-                <th>Código</th>
+                <th style={{ width: '150px' }}>Indústria</th>
+                <th style={{ width: '150px' }}>Código</th>
                 <th>Produto</th>
-                <th>Ações</th>
+                <th style={{ width: '150px' }}>Ações</th>
               </tr>
             </thead>
 
@@ -23,9 +24,10 @@ const ProductsTable = ({ products }) => {
               {products &&
                 products.map((product) => (
                   <tr key={product.id}>
-                    <td style={{ maxWidth: '100px' }}>{product.productCode}</td>
+                    <td style={{ width: '150px' }}>{product.industry}</td>
+                    <td style={{ width: '150px' }}>{product.productCode}</td>
                     <td>{product.productName}</td>
-                    <td>
+                    <td style={{ width: '150px' }}>
                       <Link to={`/products/${product.id}`}>Ver</Link>
                       <Link to={`/products/edit/${product.id}`}>Editar</Link>
                     </td>

@@ -1,28 +1,35 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { onAuthStateChanged } from 'firebase/auth'; // mapeia a autenticacao do usuario
-//hooks
+// Hooks
 import { useState, useEffect } from 'react';
 import { useAuth } from './hooks/useAuth';
-
+// Contexts
+import { AuthProvider } from './context/AuthContext';
+import { FormatProvider } from './context/formatContext';
 // Components
 import Home from './pages/Home/Home';
 // Pages
 import Header from './components/Header/Header';
+import NotFound from './pages/PageNotFound/NotFound';
 import Login from './pages/Login/Login';
 // import Register from './pages/Register/Register';
-import NotFound from './pages/PageNotFound/NotFound';
-import { AuthProvider } from './context/AuthContext';
-import RegisterClient from './pages/Clients/RegisterClient/RegisterClient';
-import RegisterOrder from './pages/Orders/RegisterOrder/RegisterOrder';
-import RegisterProduct from './pages/Products/RegisterProduct/RegisterProduct';
+// Industry Pages
 import Industries from './pages/Industries/Industries';
-import Industry from './pages/Industries/Industry/Industry';
-import RegisterIndustry from './pages/Industries/RegisterIndustry/RegisterIndustry';
-import EditIndustry from './pages/Industries/EditIndustry/EditIndustry';
-import { FormatProvider } from './context/formatContext';
+import RegisterIndustry from './pages/Industries/Create/RegisterIndustry';
+import Industry from './pages/Industries/Details/Industry';
+import EditIndustry from './pages/Industries/Edit/EditIndustry';
+// Products Pages
 import Products from './pages/Products/Products';
-import EditProduct from './pages/Products/EditProduct/EditProduct';
+import RegisterProduct from './pages/Products/Create/RegisterProduct';
 import Product from './pages/Products/Product/Product';
+import EditProduct from './pages/Products/Edit/EditProduct';
+// Clients Pages
+import Clients from './pages/Clients/Clients';
+import RegisterClient from './pages/Clients/Create/RegisterClient';
+import Client from './pages/Clients/Details/Client';
+import EditClient from './pages/Clients/Edit/EditClient';
+
+import RegisterOrder from './pages/Orders/RegisterOrder/RegisterOrder';
 
 function App() {
   const [user, setUser] = useState(undefined);
@@ -75,7 +82,7 @@ function App() {
             />
             <Route
               path='/clients'
-              element={!user ? <Navigate to='/login' /> : <Industries />}
+              element={!user ? <Navigate to='/login' /> : <Clients />}
             />
             <Route
               path='/industries'
@@ -96,7 +103,7 @@ function App() {
 
             <Route
               path='/clients/:id'
-              element={!user ? <Navigate to='/login' /> : <Product />}
+              element={!user ? <Navigate to='/login' /> : <Client />}
             />
 
             {/* Edit Pages */}
@@ -113,7 +120,7 @@ function App() {
 
             <Route
               path='/clients/edit/:id'
-              element={!user ? <Navigate to='/login' /> : <EditProduct />}
+              element={!user ? <Navigate to='/login' /> : <EditClient />}
             />
 
             {/* Register Pages */}

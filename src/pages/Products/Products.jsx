@@ -6,10 +6,16 @@ import { useFetchProducts } from '../../hooks/useFetchProducts';
 import ProductsTable from '../../components/ProductsTable/ProductsTable';
 
 import styles from './Products.module.scss';
+import { useFetchIndustries } from '../../hooks/useFetchIndustries';
+import { useEffect } from 'react';
 
 const Products = () => {
   const [query, setQuery] = useState();
   const [searchResult, setSearchResult] = useState('');
+  const [industry, setIndustry] = useState('ILUMI');
+  const [productsIndustry, setProductsIndustry] = useState([]);
+
+  const { industries } = useFetchIndustries('industries');
 
   const navigate = useNavigate();
 
@@ -24,7 +30,7 @@ const Products = () => {
         product.productName.toLowerCase().includes(query.toLowerCase()),
       );
       const searchCode = products.filter((product) =>
-        product.productCode.toLowerCase().includes(query.toLowerCase()),
+        product.productCode.includes(query),
       );
       const searchModel = products.filter((product) =>
         product.productModel.toLowerCase().includes(query.toLowerCase()),
@@ -40,6 +46,15 @@ const Products = () => {
     }
     setQuery('');
   };
+
+  useEffect(() => {
+    if (products) {
+      const filteredProducts = products.filter(
+        (product) => product.industry.toLowerCase() === industry.toLowerCase(),
+      );
+      setProductsIndustry(filteredProducts);
+    }
+  }, [products, industry]);
 
   if (loading)
     return (
@@ -61,9 +76,22 @@ const Products = () => {
         <input type='submit' value='Buscar' className='btn' />
       </form>
 
-      {!products && (
-        <div className='nopost'>
-          <p>Nenhuma indústria cadatrada.</p>
+      {industries && (
+        <div className='industriesBtn'>
+          {industries.map((industry) => (
+            <button
+              key={industry.id}
+              onClick={() => setIndustry(industry.fantasyName)}
+            >
+              {industry.fantasyName}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {productsIndustry && productsIndustry.length === 0 && (
+        <div className='nopost' style={{ marginTop: '4rem' }}>
+          <p>Nenhum produto cadatrado.</p>
           <button onClick={() => navigate('/products/new')} className='btn'>
             Cadastrar
           </button>
@@ -72,9 +100,7 @@ const Products = () => {
 
       {searchResult && searchResult.length > 0 && (
         <>
-          <p onClick={() => setSearchResult('')} className='cleanSearch'>
-            Limpar Busca
-          </p>
+          <p onClick={() => setSearchResult('')}>Limpar Busca</p>
           <ProductsTable products={searchResult} />
         </>
       )}
@@ -88,9 +114,9 @@ const Products = () => {
         </>
       )}
 
-      {products && !searchResult && (
+      {productsIndustry && productsIndustry.length > 0 && !searchResult && (
         <>
-          <ProductsTable products={products} />
+          <ProductsTable products={productsIndustry} />
         </>
       )}
     </section>

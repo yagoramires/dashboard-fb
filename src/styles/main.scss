@@ -41,12 +41,15 @@ button {
 }
 
 input.btn,
-.btn {
+.btn,
+.industriesBtn button {
   border-radius: 0.2rem;
   border: none;
   color: $light-grey;
   background-color: $dark;
   cursor: pointer;
+  font-weight: 600;
+  box-shadow: $btn-shadow;
 }
 
 .btn-danger {
@@ -139,4 +142,10 @@ section .error {
 
 .cleanSearch {
   cursor: pointer;
+}
+
+.industriesBtn {
+  @include flex-center;
+  width: 100%;
+  gap: 2rem;
 }
