@@ -19,6 +19,7 @@ import Industries from './pages/Industries/Industries';
 import Industry from './pages/Industries/Industry/Industry';
 import RegisterIndustry from './pages/Industries/RegisterIndustry/RegisterIndustry';
 import EditIndustry from './pages/Industries/EditIndustry/EditIndustry';
+import { FormatProvider } from './context/formatContext';
 
 function App() {
   const [user, setUser] = useState(undefined);
@@ -44,77 +45,79 @@ function App() {
   return (
     <div className='App'>
       <AuthProvider value={{ user }}>
-        <Header />
-        <Routes>
-          {/* Login Page */}
-          <Route
-            path='/login'
-            element={user ? <Navigate to='/' /> : <Login />}
-          />
-          {/* <Route
+        <FormatProvider>
+          <Header />
+          <Routes>
+            {/* Login Page */}
+            <Route
+              path='/login'
+              element={user ? <Navigate to='/' /> : <Login />}
+            />
+            {/* <Route
               path='/register/user'
               element={user ? <Navigate to='/' /> : <Register />}
             /> */}
-          {/* Pages */}
-          <Route
-            path='/'
-            element={!user ? <Navigate to='/login' /> : <Home />}
-          />
-          <Route
-            path='/orders'
-            element={!user ? <Navigate to='/login' /> : <Industries />}
-          />
-          <Route
-            path='/products'
-            element={!user ? <Navigate to='/login' /> : <Industries />}
-          />
-          <Route
-            path='/clients'
-            element={!user ? <Navigate to='/login' /> : <Industries />}
-          />
-          <Route
-            path='/industries'
-            element={!user ? <Navigate to='/login' /> : <Industries />}
-          />
+            {/* Pages */}
+            <Route
+              path='/'
+              element={!user ? <Navigate to='/login' /> : <Home />}
+            />
+            <Route
+              path='/orders'
+              element={!user ? <Navigate to='/login' /> : <Industries />}
+            />
+            <Route
+              path='/products'
+              element={!user ? <Navigate to='/login' /> : <Industries />}
+            />
+            <Route
+              path='/clients'
+              element={!user ? <Navigate to='/login' /> : <Industries />}
+            />
+            <Route
+              path='/industries'
+              element={!user ? <Navigate to='/login' /> : <Industries />}
+            />
 
-          {/* Individual Pages */}
+            {/* Individual Pages */}
 
-          <Route
-            path='/industries/:id'
-            element={!user ? <Navigate to='/login' /> : <Industry />}
-          />
+            <Route
+              path='/industries/:id'
+              element={!user ? <Navigate to='/login' /> : <Industry />}
+            />
 
-          {/* Edit Pages */}
+            {/* Edit Pages */}
 
-          <Route
-            path='/industries/edit/:id'
-            element={!user ? <Navigate to='/login' /> : <EditIndustry />}
-          />
+            <Route
+              path='/industries/edit/:id'
+              element={!user ? <Navigate to='/login' /> : <EditIndustry />}
+            />
 
-          {/* Register Pages */}
+            {/* Register Pages */}
 
-          <Route
-            path='/orders/new'
-            element={!user ? <Navigate to='/login' /> : <RegisterOrder />}
-          />
-          <Route
-            path='/products/new'
-            element={!user ? <Navigate to='/login' /> : <RegisterProduct />}
-          />
-          <Route
-            path='/clients/new'
-            element={!user ? <Navigate to='/login' /> : <RegisterClient />}
-          />
-          <Route
-            path='/industries/new'
-            element={!user ? <Navigate to='/login' /> : <RegisterIndustry />}
-          />
-          {/* <Route
+            <Route
+              path='/orders/new'
+              element={!user ? <Navigate to='/login' /> : <RegisterOrder />}
+            />
+            <Route
+              path='/products/new'
+              element={!user ? <Navigate to='/login' /> : <RegisterProduct />}
+            />
+            <Route
+              path='/clients/new'
+              element={!user ? <Navigate to='/login' /> : <RegisterClient />}
+            />
+            <Route
+              path='/industries/new'
+              element={!user ? <Navigate to='/login' /> : <RegisterIndustry />}
+            />
+            {/* <Route
             path='/profile'
             element={user ? <Navigate to='/' /> : <Profile />}
           /> */}
-          <Route path='*' element={<NotFound />} />
-        </Routes>
+            <Route path='*' element={<NotFound />} />
+          </Routes>
+        </FormatProvider>
       </AuthProvider>
     </div>
   );

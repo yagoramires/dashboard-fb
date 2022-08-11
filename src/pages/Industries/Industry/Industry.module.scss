@@ -3,6 +3,14 @@
 .industry {
   @include flex-center-col;
   align-items: flex-start;
+  max-width: 1120px;
+  gap: 1rem;
+  margin: 2rem auto;
+}
+
+.industry p {
+  margin-left: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .industry div {
