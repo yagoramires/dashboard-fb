@@ -22,7 +22,7 @@ const updateReducer = (state, action) => {
   }
 }; // Função do Reducer que valida os estados
 
-export const useUpdateProduct = (docCollection) => {
+export const useUpdateDocument = (docCollection) => {
   const [response, dispatch] = useReducer(updateReducer, initialState);
   //Reducer, passando a função que será executada e seu estado inicial setado acima
 
@@ -35,7 +35,7 @@ export const useUpdateProduct = (docCollection) => {
     }
   }; // caso o estado cancelado seja falso, irá realizar o dispatch passando a action
 
-  const updateProduct = async (id, data) => {
+  const updateDocument = async (id, data) => {
     checkCanceledBeforeDispatch({
       type: 'LOADING',
     }); // Inicia o Loading no reducer
@@ -60,5 +60,5 @@ export const useUpdateProduct = (docCollection) => {
     return () => setCanceled(true);
   }, []); // define o cancelado como verdadeiro ao sair da pagina
 
-  return { updateProduct, response }; // retorna a funcao e a resposta do reducer
+  return { updateDocument, response }; // retorna a funcao e a resposta do reducer
 };

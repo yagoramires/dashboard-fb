@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFetchIndustries } from '../../../hooks/useFetchIndustries';
-
-import { useInsertProduct } from '../../../hooks/useInsertProduct';
+import { useInsertDocument } from '../../../hooks/useInsertDocument';
 
 import styles from './RegisterProduct.module.scss';
 
@@ -19,7 +18,7 @@ const RegisterProduct = () => {
 
   const { industries } = useFetchIndustries('industries');
 
-  const { insertProduct, response } = useInsertProduct('products');
+  const { insertDocument, response } = useInsertDocument('products');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -47,7 +46,7 @@ const RegisterProduct = () => {
       setError('Por favor, preencha todos os campos!');
     }
 
-    insertProduct({
+    insertDocument({
       industry,
       productImage,
       productName,

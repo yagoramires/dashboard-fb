@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useInsertIndustry } from '../../../hooks/useInsertIndustry';
+import { useInsertDocument } from '../../../hooks/useInsertDocument';
 
 import styles from './RegisterIndustry.module.scss';
 
@@ -14,12 +14,12 @@ const RegisterIndustry = () => {
 
   const navigate = useNavigate();
 
-  const { insertIndustry, response } = useInsertIndustry('industries');
+  const { insertDocument, response } = useInsertDocument('industries');
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    insertIndustry({
+    insertDocument({
       socialName,
       fantasyName,
       cnpj,

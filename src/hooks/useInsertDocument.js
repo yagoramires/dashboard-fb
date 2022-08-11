@@ -2,18 +2,18 @@
 import { db } from '../firebase/config'; // importa o DB do firebase
 
 import { useState, useEffect, useReducer } from 'react';
-import { updateDoc, doc } from 'firebase/firestore';
+import { collection, addDoc, Timestamp } from 'firebase/firestore';
 
 const initialState = {
   loading: null,
   error: null,
 }; // Estado inicial do reducer
 
-const updateReducer = (state, action) => {
+const insertReducer = (state, action) => {
   switch (action.type) {
     case 'LOADING':
       return { loading: true, error: null };
-    case 'UPDATED_DOC':
+    case 'INSERTED_DOC':
       return { loading: false, error: null };
     case 'ERROR':
       return { loading: false, error: action.payload };
@@ -22,8 +22,8 @@ const updateReducer = (state, action) => {
   }
 }; // Função do Reducer que valida os estados
 
-export const useUpdateIndustry = (docCollection) => {
-  const [response, dispatch] = useReducer(updateReducer, initialState);
+export const useInsertDocument = (docCollection) => {
+  const [response, dispatch] = useReducer(insertReducer, initialState);
   //Reducer, passando a função que será executada e seu estado inicial setado acima
 
   // clean up, lida com o memory leak. ajuda na performance do app
@@ -35,18 +35,25 @@ export const useUpdateIndustry = (docCollection) => {
     }
   }; // caso o estado cancelado seja falso, irá realizar o dispatch passando a action
 
-  const updateIndustry = async (id, data) => {
+  const insertDocument = async (document) => {
     checkCanceledBeforeDispatch({
       type: 'LOADING',
     }); // Inicia o Loading no reducer
 
     try {
-      const docRef = await doc(db, docCollection, id);
-      const updatedDocument = await updateDoc(docRef, data);
+      const newDocument = {
+        ...document,
+        createdAt: Timestamp.now(),
+      }; // documento que será inserido pegando os dados que serão passados por essa função, e o timestamp pega a data de criação
+
+      const insertDocument = await addDoc(
+        collection(db, docCollection), // docCollection é a coleção passada pela função
+        newDocument, // insere o documento na coleção
+      );
 
       checkCanceledBeforeDispatch({
-        type: 'UPDATED_DOC', // altera o estado para documento inserido
-        payload: updatedDocument, // passa o documento a ser inserido
+        type: 'INSERTED_DOC', // altera o estado para documento inserido
+        payload: insertDocument, // passa o documento a ser inserido
       });
     } catch (error) {
       checkCanceledBeforeDispatch({
@@ -60,5 +67,5 @@ export const useUpdateIndustry = (docCollection) => {
     return () => setCanceled(true);
   }, []); // define o cancelado como verdadeiro ao sair da pagina
 
-  return { updateIndustry, response }; // retorna a funcao e a resposta do reducer
+  return { insertDocument, response }; // retorna a funcao e a resposta do reducer
 };

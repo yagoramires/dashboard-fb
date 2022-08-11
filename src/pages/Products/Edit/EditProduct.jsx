@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { useUpdateProduct } from '../../../hooks/useUpdateProduct';
+import { useUpdateDocument } from '../../../hooks/useUpdateDocument';
 import { useFetchProduct } from '../../../hooks/useFetchProduct';
 
 import styles from './EditProduct.module.scss';
@@ -43,7 +43,7 @@ const EditProduct = () => {
     navigate(`/products/`);
   };
 
-  const { updateProduct, response } = useUpdateProduct('products');
+  const { updateDocument, response } = useUpdateDocument('products');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -71,7 +71,7 @@ const EditProduct = () => {
       setError('Por favor, preencha todos os campos!');
     }
 
-    updateProduct(id, {
+    updateDocument(id, {
       industry,
       productImage,
       productName,

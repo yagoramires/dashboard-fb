@@ -5,9 +5,9 @@ import { useFetchProducts } from '../../hooks/useFetchProducts';
 
 import ProductsTable from '../../components/ProductsTable/ProductsTable';
 
-import styles from './Products.module.scss';
+import styles from './Clients.module.scss';
 
-const Products = () => {
+const Clients = () => {
   const [query, setQuery] = useState();
   const [searchResult, setSearchResult] = useState('');
 
@@ -49,8 +49,8 @@ const Products = () => {
     );
 
   return (
-    <section className={styles.products}>
-      <h1>Produtos</h1>
+    <section className={styles.clients}>
+      <h1>Clientes</h1>
       <form onSubmit={handleSubmit} className={styles.form}>
         <input
           type='text'
@@ -63,7 +63,7 @@ const Products = () => {
 
       {!products && (
         <div className='nopost'>
-          <p>Nenhuma indústria cadatrada.</p>
+          <p>Nenhum cliente cadatrado.</p>
           <button onClick={() => navigate('/products/new')} className='btn'>
             Cadastrar
           </button>
@@ -95,4 +95,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default Clients;

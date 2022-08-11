@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { useUpdateProduct } from '../../../hooks/useUpdateProduct';
 import { useFetchProduct } from '../../../hooks/useFetchProduct';
 
 import styles from './EditProduct.module.scss';
 import { useEffect } from 'react';
 import { useDeleteDocument } from '../../../hooks/useDeleteDocument';
 import { useFetchIndustries } from '../../../hooks/useFetchIndustries';
+import { useUpdateDocument } from '../../../hooks/useUpdateDocument';
 
 const EditProduct = () => {
   const { id } = useParams();
@@ -34,7 +34,7 @@ const EditProduct = () => {
     }
   }, [product]);
 
-  const { deleteDocument } = useDeleteDocument('products');
+  const { deleteDocument } = useDeleteDocument('clients');
 
   const navigate = useNavigate();
 
@@ -43,7 +43,7 @@ const EditProduct = () => {
     navigate(`/products/`);
   };
 
-  const { updateProduct, response } = useUpdateProduct('products');
+  const { updateDocument, response } = useUpdateDocument('clients');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -71,7 +71,7 @@ const EditProduct = () => {
       setError('Por favor, preencha todos os campos!');
     }
 
-    updateProduct(id, {
+    updateDocument(id, {
       industry,
       productImage,
       productName,

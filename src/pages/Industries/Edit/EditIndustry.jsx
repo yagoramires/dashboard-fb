@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { useUpdateIndustry } from '../../../hooks/useUpdateIndustry';
 import { useFetchIndustry } from '../../../hooks/useFetchIndustry';
 
 import styles from './EditIndustry.module.scss';
 import { useEffect } from 'react';
 import { useDeleteDocument } from '../../../hooks/useDeleteDocument';
+import { useUpdateDocument } from '../../../hooks/useUpdateDocument';
 
 const EditIndustry = () => {
   const { id } = useParams();
@@ -37,12 +37,12 @@ const EditIndustry = () => {
     navigate(`/industries/`);
   };
 
-  const { updateIndustry, response } = useUpdateIndustry('industries');
+  const { updateDocument, response } = useUpdateDocument('industries');
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    updateIndustry(id, {
+    updateDocument(id, {
       socialName,
       fantasyName,
       cnpj,

@@ -1,26 +1,26 @@
 @use '../../styles/utils/' as *;
 
-.products {
+.clients {
   @include flex-center-col;
   gap: 2rem;
 }
 
-.products h1 {
+.clients h1 {
   font-size: 2.2rem;
   color: $dark;
 }
 
-.products div button {
+.clients div button {
   max-width: 100px;
 }
 
-.products div {
+.clients div {
   width: 100%;
   max-width: 1120px;
   margin: 0 auto;
 }
 
-.products form {
+.clients form {
   display: flex;
   gap: 1rem;
   width: 90%;
@@ -30,6 +30,6 @@
   }
 }
 
-.products form input:nth-of-type(2) {
+.clients form input:nth-of-type(2) {
   width: 100px;
 }

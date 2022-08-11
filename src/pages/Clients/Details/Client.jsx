@@ -2,9 +2,9 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useDeleteDocument } from '../../../hooks/useDeleteDocument';
 import { useFetchProduct } from '../../../hooks/useFetchProduct';
 
-import styles from './Product.module.scss';
+import styles from './Client.module.scss';
 
-const Product = () => {
+const Client = () => {
   const { id } = useParams();
   const { product } = useFetchProduct('products', id);
 
@@ -59,4 +59,4 @@ const Product = () => {
   );
 };
 
-export default Product;
+export default Client;
