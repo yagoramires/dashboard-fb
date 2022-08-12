@@ -1,27 +1,33 @@
 @use '../../../styles/utils/' as *;
 
-.product {
-  @include flex-center;
+.client {
+  @include flex-center-col;
+  align-items: flex-start;
   max-width: 1120px;
+  width: 100%;
   gap: 1rem;
   margin: 4rem auto;
 }
 
-.product p {
+.client p {
   margin-left: 0.5rem;
   margin-bottom: 1rem;
 }
 
-.product > div {
-  @include flex-center-col;
-  align-items: flex-start;
+.client > div {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: space-between;
+  gap: 10rem;
   width: 100%;
+}
 
-  & div {
-    @include flex-center;
-    // align-self: center;
-    margin-top: 2rem;
-    gap: 1rem;
-    width: 300px;
-  }
+.client > div:last-child {
+  @include flex-center;
+}
+
+.client div div div {
+  @include flex-center;
+  justify-content: flex-start;
+  gap: 2rem;
 }

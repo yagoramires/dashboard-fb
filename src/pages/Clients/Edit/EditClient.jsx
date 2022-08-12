@@ -306,17 +306,17 @@ const EditClient = () => {
         </div>
 
         {!response.loading && (
-          <input type='submit' value='Cadastrar' className='btn' />
+          <input type='submit' value='Alterar' className='btn' />
         )}
         {response.loading && (
-          <input type='submit' value='Cadastrando' className='btn' disabled />
+          <input type='submit' value='Alterando' className='btn' disabled />
         )}
         {response.error && <p className='error'>{response.error}</p>}
         {error && <p className='error'>{error}</p>}
       </form>
 
       <div className='buttonsContainer'>
-        <button onClick={() => navigate(`/products/${id}`)} className='btn '>
+        <button onClick={() => navigate(`/clients/${id}`)} className='btn '>
           Voltar
         </button>
         <button onClick={handleDelete} className='btn btn-danger'>
