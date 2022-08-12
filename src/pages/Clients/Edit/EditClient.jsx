@@ -1,88 +1,104 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { useFetchProduct } from '../../../hooks/useFetchProduct';
-
-import styles from './EditProduct.module.scss';
-import { useEffect } from 'react';
+// Hooks
+import { useFetchDocument } from '../../../hooks/useFetchDocument';
 import { useDeleteDocument } from '../../../hooks/useDeleteDocument';
-import { useFetchIndustries } from '../../../hooks/useFetchIndustries';
 import { useUpdateDocument } from '../../../hooks/useUpdateDocument';
 
-const EditProduct = () => {
-  const { id } = useParams();
-  const { product, loading } = useFetchProduct('products', id);
+// Styles
+import styles from './EditClient.module.scss';
 
-  const [industry, setIndustry] = useState('selecione');
-  const [productImage, setProductImage] = useState('');
-  const [productName, setProductName] = useState('');
-  const [productModel, setProductModel] = useState('');
-  const [productCode, setProductCode] = useState('');
-  const [productPrice, setProductPrice] = useState('');
+const EditClient = () => {
+  const [code, setCode] = useState('');
+  const [socialName, setSocialName] = useState('');
+  const [fantasyName, setFantasyName] = useState('');
+  const [email, setEmail] = useState('');
+  const [cnpj, setCnpj] = useState('');
+  const [stateRegistration, setStateRegistration] = useState('');
+  const [addres, setAddres] = useState('');
+  const [shipping, setShipping] = useState('');
+  const [network, setNetwork] = useState('');
+  const [invoicing, setInvoicing] = useState('');
+  const [paymentTerm, setPaymentTerm] = useState('');
+  const [percent, setPercent] = useState('');
+  const [descA, setDescA] = useState('');
+  const [descB, setDescB] = useState('');
+  const [descC, setDescC] = useState('');
+  const [descInCash, setDescInCash] = useState('');
+
   const [error, setError] = useState('');
 
-  const { industries } = useFetchIndustries('industries');
-
-  useEffect(() => {
-    if (product) {
-      setIndustry(product.industry);
-      setProductImage(product.productImage);
-      setProductName(product.productName);
-      setProductModel(product.productModel);
-      setProductCode(product.productCode);
-      setProductPrice(product.productPrice);
-    }
-  }, [product]);
+  const { id } = useParams();
+  const { document: client, loading } = useFetchDocument('clients', id);
 
   const { deleteDocument } = useDeleteDocument('clients');
+  const { updateDocument, response } = useUpdateDocument('clients');
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (client) {
+      setCode(client.code);
+      setSocialName(client.socialName);
+      setFantasyName(client.fantasyName);
+      setEmail(client.email);
+      setCnpj(client.cnpj);
+      setStateRegistration(client.stateRegistration);
+      setAddres(client.addres);
+      setShipping(client.shipping);
+      setNetwork(client.network);
+      setInvoicing(client.invoicing);
+      setPaymentTerm(client.paymentTerm);
+      setPercent(client.percent);
+      setDescA(client.descA);
+      setDescB(client.descB);
+      setDescC(client.descC);
+      setDescInCash(client.descInCash);
+    }
+  }, [client]);
+
   const handleDelete = () => {
     deleteDocument(id);
-    navigate(`/products/`);
+    navigate(`/clients/`);
   };
-
-  const { updateDocument, response } = useUpdateDocument('clients');
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setError('');
 
-    if (industry === 'selecione') {
-      setError('Selecione uma indústria');
+    //check all values
+    if (!code || !socialName || !cnpj || !network || !invoicing) {
+      setError('Por favor, preencha os campos obrigatórios!');
+    }
+
+    if (cnpj.length !== 14) {
+      setError('O CNPJ precisa ser válido');
       return;
     }
 
-    try {
-      new URL(productImage);
-    } catch (error) {
-      setError('A imagem precisa ser um link.');
-    }
-
-    // check all values
-    if (
-      // !industry ||
-      !productName ||
-      !productModel ||
-      !productCode ||
-      !productPrice
-    ) {
-      setError('Por favor, preencha todos os campos!');
-    }
-
     updateDocument(id, {
-      industry,
-      productImage,
-      productName,
-      productModel,
-      productCode,
-      productPrice,
+      code,
+      socialName,
+      fantasyName,
+      email,
+      cnpj,
+      stateRegistration,
+      addres,
+      shipping,
+      network,
+      invoicing,
+      paymentTerm,
+      percent,
+      descA,
+      descB,
+      descC,
+      descInCash,
     });
 
     if (response.error) return;
 
-    navigate('/products');
+    navigate('/clients');
   };
 
   if (loading) {
@@ -94,100 +110,212 @@ const EditProduct = () => {
   }
 
   return (
-    <section className={styles.editProduct}>
+    <section className={styles.editClient}>
       <div>
-        <h1>Editar produto</h1>
-
-        <p>Altere os dados abaixo</p>
+        <h1>Editar cliente</h1>
+        <p>Preencha os dados abaixo para alterar os dados do cliente</p>
       </div>
       <form onSubmit={handleSubmit} className='form'>
         <label>
-          {product && (
-            <img src={product.productImage} alt={product.productName} />
-          )}
-        </label>
-        <label>
-          <span>Indústria:</span>
-          <select
-            onChange={(e) => setIndustry(e.target.value)}
-            value={industry}
-          >
-            <option value='select'>Selecione </option>
-            {industries &&
-              industries.map((industry) => (
-                <option value={industry.fantasyName} key={industry.id}>
-                  {industry.fantasyName}
-                </option>
-              ))}
-          </select>
+          <span>
+            <span> * </span>Código do cliente:
+          </span>
+          <input
+            type='number'
+            name='code'
+            value={code}
+            onChange={(e) => setCode(e.target.value)}
+            placeholder='Código '
+            required
+          />
         </label>
 
         <label>
-          <span>URL da imagem do produto:</span>
+          <span>
+            <span> * </span>Razão Social:
+          </span>
           <input
             type='text'
-            name='productImage'
-            value={productImage}
-            onChange={(e) => setProductImage(e.target.value)}
-            placeholder='Digite o URL do produto'
+            name='socialName'
+            value={socialName}
+            onChange={(e) => setSocialName(e.target.value)}
+            placeholder='Razão social '
+            required
           />
         </label>
         <label>
-          <span>Nome do produto:</span>
+          <span>Nome Fantasia:</span>
           <input
             type='text'
-            name='productName'
-            value={productName}
-            onChange={(e) => setProductName(e.target.value)}
-            placeholder='Digite o nome do produto'
+            name='fantasyName'
+            value={fantasyName}
+            onChange={(e) => setFantasyName(e.target.value)}
+            placeholder='Nome fantasia'
             required
           />
         </label>
-        <label>
-          <span>Código do produto:</span>
-          <input
-            type='number'
-            name='productCode'
-            value={productCode}
-            onChange={(e) => setProductCode(e.target.value)}
-            placeholder='Digite o código do produto'
-            required
-          />
-        </label>
-        <label>
-          <span>Tipo do produto:</span>
-          <input
-            type='text'
-            name='productModel'
-            value={productModel}
-            onChange={(e) => setProductModel(e.target.value)}
-            placeholder='Digite o modelo/linha do produto'
-            required
-          />
-        </label>
-        <label>
-          <span>Valor:</span>
-          <input
-            type='number'
-            name='productPrice'
-            value={productPrice}
-            onChange={(e) => setProductPrice(e.target.value)}
-            placeholder='Digite o valor do produto'
-            required
-          />
-        </label>
+
+        <div>
+          <label>
+            <span>
+              <span> * </span>CNPJ:
+            </span>
+            <input
+              type='number'
+              name='cnpj'
+              value={cnpj}
+              onChange={(e) => setCnpj(e.target.value)}
+              placeholder='CNPJ  '
+            />
+          </label>
+          <label>
+            <span>Inscrição Estadual:</span>
+            <input
+              type='number'
+              name='stateRegistration'
+              value={stateRegistration}
+              onChange={(e) => setStateRegistration(e.target.value)}
+              placeholder='Inscrição estadual'
+            />
+          </label>
+        </div>
+        <h3>Contato e entrega</h3>
+        <div>
+          <label>
+            <span>E-mail:</span>
+            <input
+              type='email'
+              name='email'
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder='E-mail de contato'
+            />
+          </label>
+
+          <label>
+            <span>Endereço:</span>
+            <input
+              type='text'
+              name='addres'
+              value={addres}
+              onChange={(e) => setAddres(e.target.value)}
+              placeholder='Endereço'
+            />
+          </label>
+          <label>
+            <span>Frete:</span>
+            <input
+              type='text'
+              name='shipping'
+              value={shipping}
+              onChange={(e) => setShipping(e.target.value)}
+              placeholder='Tipo de frete'
+            />
+          </label>
+        </div>
+
+        <h3>Faturamento</h3>
+        <div>
+          <label>
+            <span>
+              <span> * </span>Rede:
+            </span>
+            <input
+              type='text'
+              name='network'
+              value={network}
+              onChange={(e) => setNetwork(e.target.value)}
+              placeholder='Rede'
+            />
+          </label>
+          <label>
+            <span>
+              <span> * </span>Tipo de Faturamento:
+            </span>
+            <input
+              type='text'
+              name='invoicing'
+              value={invoicing}
+              onChange={(e) => setInvoicing(e.target.value)}
+              placeholder='Tipo de faturamento'
+            />
+          </label>
+          <label>
+            <span>Prazo de pagamento:</span>
+            <input
+              type='text'
+              name='paymentTerm'
+              value={paymentTerm}
+              onChange={(e) => setPaymentTerm(e.target.value)}
+              placeholder='Prazo de pagamento'
+            />
+          </label>
+        </div>
+        <h3>Descontos</h3>
+        <div>
+          <label>
+            <span>Percentual:</span>
+            <input
+              type='number'
+              name='percent'
+              value={percent}
+              onChange={(e) => setPercent(e.target.value)}
+              placeholder='%'
+            />
+          </label>
+          <label>
+            <span>Desconto A:</span>
+            <input
+              type='number'
+              name='descA'
+              value={descA}
+              onChange={(e) => setDescA(e.target.value)}
+              placeholder='%'
+            />
+          </label>
+          <label>
+            <span>Desconto B:</span>
+            <input
+              type='number'
+              name='descB'
+              value={descB}
+              onChange={(e) => setDescB(e.target.value)}
+              placeholder='%'
+            />
+          </label>
+          <label>
+            <span>Desconto C:</span>
+            <input
+              type='number'
+              name='descC'
+              value={descC}
+              onChange={(e) => setDescC(e.target.value)}
+              placeholder='%'
+            />
+          </label>
+          <label>
+            <span>Desc. à vista:</span>
+            <input
+              type='number'
+              name='descInCash'
+              value={descInCash}
+              onChange={(e) => setDescInCash(e.target.value)}
+              placeholder='%'
+            />
+          </label>
+        </div>
 
         {!response.loading && (
-          <input type='submit' value='Alterar' className='btn' />
+          <input type='submit' value='Cadastrar' className='btn' />
         )}
         {response.loading && (
-          <input type='submit' value='Alterando' className='btn' disabled />
+          <input type='submit' value='Cadastrando' className='btn' disabled />
         )}
         {response.error && <p className='error'>{response.error}</p>}
         {error && <p className='error'>{error}</p>}
       </form>
 
-      <div className={styles.buttonsContainer}>
+      <div className='buttonsContainer'>
         <button onClick={() => navigate(`/products/${id}`)} className='btn '>
           Voltar
         </button>
@@ -199,4 +327,4 @@ const EditProduct = () => {
   );
 };
 
-export default EditProduct;
+export default EditClient;

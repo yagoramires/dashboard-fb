@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useFetchIndustries } from '../../../hooks/useFetchIndustries';
+
+// Hooks
+import { useFetchDocuments } from '../../../hooks/useFetchDocuments';
 import { useInsertDocument } from '../../../hooks/useInsertDocument';
 
+// Styles
 import styles from './RegisterProduct.module.scss';
 
 const RegisterProduct = () => {
@@ -14,11 +17,10 @@ const RegisterProduct = () => {
   const [productPrice, setProductPrice] = useState('');
   const [error, setError] = useState('');
 
-  const navigate = useNavigate();
-
-  const { industries } = useFetchIndustries('industries');
-
+  const { documents: industries } = useFetchDocuments('industries');
   const { insertDocument, response } = useInsertDocument('products');
+
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();

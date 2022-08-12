@@ -1,5 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
+
+// Hooks
 import { useAuth } from '../../hooks/useAuth';
 
 // styles

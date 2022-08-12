@@ -1,19 +1,22 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useFetchIndustries } from '../../hooks/useFetchIndustries';
+// Hooks
+import { useFetchDocuments } from '../../hooks/useFetchDocuments';
 
+// Components
 import IndustryTable from '../../components/IndustryTable/IndustryTable';
 
+// Styles
 import styles from './Industries.module.scss';
 
 const Industries = () => {
   const [query, setQuery] = useState();
   const [searchResult, setSearchResult] = useState('');
 
-  const navigate = useNavigate();
+  const { documents: industries, loading } = useFetchDocuments('industries');
 
-  const { industries, loading } = useFetchIndustries('industries');
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();

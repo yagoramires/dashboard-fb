@@ -1,7 +1,11 @@
 /* eslint-disable no-unused-vars */
 import { useEffect } from 'react';
 import { useState } from 'react';
+
+// Hooks
 import { useLogin } from '../../hooks/useLogin';
+
+// Styles
 import styles from './Login.module.scss';
 
 const Login = () => {

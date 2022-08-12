@@ -1,18 +1,16 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
+// Hooks
+import { useFetchDocuments } from '../../../hooks/useFetchDocuments';
+import { useFetchDocument } from '../../../hooks/useFetchDocument';
 import { useUpdateDocument } from '../../../hooks/useUpdateDocument';
-import { useFetchProduct } from '../../../hooks/useFetchProduct';
-
-import styles from './EditProduct.module.scss';
-import { useEffect } from 'react';
 import { useDeleteDocument } from '../../../hooks/useDeleteDocument';
-import { useFetchIndustries } from '../../../hooks/useFetchIndustries';
+
+// Styles
+import styles from './EditProduct.module.scss';
 
 const EditProduct = () => {
-  const { id } = useParams();
-  const { product, loading } = useFetchProduct('products', id);
-
   const [industry, setIndustry] = useState('selecione');
   const [productImage, setProductImage] = useState('');
   const [productName, setProductName] = useState('');
@@ -21,7 +19,13 @@ const EditProduct = () => {
   const [productPrice, setProductPrice] = useState('');
   const [error, setError] = useState('');
 
-  const { industries } = useFetchIndustries('industries');
+  const { id } = useParams();
+  const { document: product, loading } = useFetchDocument('products', id);
+  const { documents: industries } = useFetchDocuments('industries');
+  const { updateDocument, response } = useUpdateDocument('products');
+  const { deleteDocument } = useDeleteDocument('products');
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (product) {
@@ -34,16 +38,10 @@ const EditProduct = () => {
     }
   }, [product]);
 
-  const { deleteDocument } = useDeleteDocument('products');
-
-  const navigate = useNavigate();
-
   const handleDelete = () => {
     deleteDocument(id);
     navigate(`/products/`);
   };
-
-  const { updateDocument, response } = useUpdateDocument('products');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -187,7 +185,7 @@ const EditProduct = () => {
         {error && <p className='error'>{error}</p>}
       </form>
 
-      <div className={styles.buttonsContainer}>
+      <div className='buttonsContainer'>
         <button onClick={() => navigate(`/products/${id}`)} className='btn '>
           Voltar
         </button>

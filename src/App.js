@@ -29,7 +29,7 @@ import RegisterClient from './pages/Clients/Create/RegisterClient';
 import Client from './pages/Clients/Details/Client';
 import EditClient from './pages/Clients/Edit/EditClient';
 
-import RegisterOrder from './pages/Orders/RegisterOrder/RegisterOrder';
+// import RegisterOrder from './pages/Orders/RegisterOrder/RegisterOrder';
 
 function App() {
   const [user, setUser] = useState(undefined);
@@ -125,10 +125,10 @@ function App() {
 
             {/* Register Pages */}
 
-            <Route
+            {/* <Route
               path='/orders/new'
               element={!user ? <Navigate to='/login' /> : <RegisterOrder />}
-            />
+            /> */}
             <Route
               path='/products/new'
               element={!user ? <Navigate to='/login' /> : <RegisterProduct />}

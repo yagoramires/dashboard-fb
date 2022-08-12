@@ -1,13 +1,14 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useFetchProducts } from '../../hooks/useFetchProducts';
+// Hooks
+import { useFetchDocuments } from '../../hooks/useFetchDocuments';
 
+// Components
 import ProductsTable from '../../components/ProductsTable/ProductsTable';
 
+// Styles
 import styles from './Products.module.scss';
-import { useFetchIndustries } from '../../hooks/useFetchIndustries';
-import { useEffect } from 'react';
 
 const Products = () => {
   const [query, setQuery] = useState();
@@ -15,11 +16,10 @@ const Products = () => {
   const [industry, setIndustry] = useState('ILUMI');
   const [productsIndustry, setProductsIndustry] = useState([]);
 
-  const { industries } = useFetchIndustries('industries');
+  const { documents: products, loading } = useFetchDocuments('products');
+  const { documents: industries } = useFetchDocuments('industries');
 
   const navigate = useNavigate();
-
-  const { products, loading } = useFetchProducts('products');
 
   const handleSubmit = (e) => {
     e.preventDefault();

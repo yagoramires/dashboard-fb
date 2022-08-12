@@ -1,17 +1,21 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { useFormat } from '../../../context/formatContext';
-import { useDeleteDocument } from '../../../hooks/useDeleteDocument';
-import { useFetchIndustry } from '../../../hooks/useFetchIndustry';
 
+// Contexts
+import { useFormat } from '../../../context/formatContext';
+
+// Hooks
+import { useDeleteDocument } from '../../../hooks/useDeleteDocument';
+import { useFetchDocument } from '../../../hooks/useFetchDocument';
+
+// Styles
 import styles from './Industry.module.scss';
 
 const Industry = () => {
   const { id } = useParams();
-  const { industry } = useFetchIndustry('industries', id);
+  const { document: industry } = useFetchDocument('industries', id);
+  const { deleteDocument } = useDeleteDocument('industries');
 
   const { formatCnpj } = useFormat();
-
-  const { deleteDocument } = useDeleteDocument('industries');
 
   const navigate = useNavigate();
 

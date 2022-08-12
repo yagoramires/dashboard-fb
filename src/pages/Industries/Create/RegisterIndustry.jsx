@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+// Hooks
 import { useInsertDocument } from '../../../hooks/useInsertDocument';
 
+// Styles
 import styles from './RegisterIndustry.module.scss';
 
 const RegisterIndustry = () => {
@@ -12,12 +14,24 @@ const RegisterIndustry = () => {
   const [stateRegistration, setStateRegistration] = useState('');
   const [addres, setAddress] = useState('');
 
-  const navigate = useNavigate();
+  const [error, setError] = useState('');
 
   const { insertDocument, response } = useInsertDocument('industries');
 
+  const navigate = useNavigate();
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    //check all values
+    if (!socialName || !cnpj) {
+      setError('Por favor, preencha os campos obrigatórios!');
+    }
+
+    if (cnpj.length !== 14) {
+      setError('O CNPJ precisa ser válido');
+      return;
+    }
 
     insertDocument({
       socialName,
@@ -104,6 +118,7 @@ const RegisterIndustry = () => {
           <input type='submit' value='Cadastrando' className='btn' disabled />
         )}
         {response.error && <p className='error'>{response.error}</p>}
+        {error && <p className='error'>{error}</p>}
       </form>
     </section>
   );

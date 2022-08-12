@@ -4,34 +4,34 @@ import { useState, useEffect } from 'react';
 
 import { doc, getDoc } from 'firebase/firestore';
 
-export const useFetchIndustry = (docCollection, id) => {
-  const [industry, setIndustry] = useState(null);
+export const useFetchDocument = (docCollection, id) => {
+  const [document, setDocument] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(null);
   const [canceled, setCanceled] = useState(false);
 
   useEffect(() => {
-    async function loadIndustry() {
+    async function loadDocument() {
       if (canceled) return; // se cancelado, retorna
       setLoading(true); // inicializa o loading
 
       try {
-        const industryRef = await doc(db, docCollection, id); // cria a referencia a ser passada no snap
-        const industrySnap = await getDoc(industryRef);
+        const documentRef = await doc(db, docCollection, id); // cria a referencia a ser passada no snap
+        const documentSnap = await getDoc(documentRef);
 
-        setIndustry(industrySnap.data());
+        setDocument(documentSnap.data());
         setLoading(false);
       } catch (error) {
         setError(error.message);
         setLoading(false);
       }
     }
-    loadIndustry();
+    loadDocument();
   }, [docCollection, id, canceled]);
 
   useEffect(() => {
     return () => setCanceled(true);
   }, []); // define o cancelado como verdadeiro ao sair da pagina
 
-  return { industry, loading, error };
+  return { document, loading, error };
 };

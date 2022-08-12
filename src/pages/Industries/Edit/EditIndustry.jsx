@@ -1,22 +1,26 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { useFetchIndustry } from '../../../hooks/useFetchIndustry';
-
-import styles from './EditIndustry.module.scss';
-import { useEffect } from 'react';
+// Hooks
+import { useFetchDocument } from '../../../hooks/useFetchDocument';
 import { useDeleteDocument } from '../../../hooks/useDeleteDocument';
 import { useUpdateDocument } from '../../../hooks/useUpdateDocument';
 
-const EditIndustry = () => {
-  const { id } = useParams();
-  const { industry, loading } = useFetchIndustry('industries', id);
+// Styles
+import styles from './EditIndustry.module.scss';
 
+const EditIndustry = () => {
   const [socialName, setSocialName] = useState('');
   const [fantasyName, setFantasyName] = useState('');
   const [cnpj, setCnpj] = useState('');
   const [stateRegistration, setStateRegistration] = useState('');
   const [addres, setAddress] = useState('');
+
+  const { id } = useParams();
+  const { document: industry, loading } = useFetchDocument('industries', id);
+  const { deleteDocument } = useDeleteDocument('industries');
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (industry) {
@@ -27,10 +31,6 @@ const EditIndustry = () => {
       setAddress(industry.addres);
     }
   }, [industry]);
-
-  const { deleteDocument } = useDeleteDocument('industries');
-
-  const navigate = useNavigate();
 
   const handleDelete = () => {
     deleteDocument(id);
@@ -142,7 +142,7 @@ const EditIndustry = () => {
             {response.error && <p className='error'>{response.error}</p>}
           </form>
 
-          <div className={styles.buttonsContainer}>
+          <div className='buttonsContainer'>
             <button onClick={() => navigate('/industries')} className='btn '>
               Voltar
             </button>

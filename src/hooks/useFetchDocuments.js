@@ -10,14 +10,14 @@ import {
   // where, // faz um filtro dos dados
 } from 'firebase/firestore';
 
-export const useFetchProducts = (docCollection) => {
-  const [products, setProducts] = useState(null);
+export const useFetchDocuments = (docCollection) => {
+  const [documents, setDocuments] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(null);
   const [canceled, setCanceled] = useState(false);
 
   useEffect(() => {
-    async function loadProducts() {
+    async function loadDocuments() {
       if (canceled) return; // se cancelado, retorna
 
       setLoading(true); // inicializa o loading
@@ -31,7 +31,7 @@ export const useFetchProducts = (docCollection) => {
 
         await onSnapshot(q, (querySnapshot) => {
           // faz o mapeamento dos dados, ou seja atualiza quando ha alteracoes
-          setProducts(
+          setDocuments(
             querySnapshot.docs.map((doc) => ({
               id: doc.id, // traz o id
               ...doc.data(), // traz os dados inseridos no banco
@@ -44,12 +44,12 @@ export const useFetchProducts = (docCollection) => {
         setLoading(false);
       }
     }
-    loadProducts();
+    loadDocuments();
   }, [docCollection, canceled]);
 
   useEffect(() => {
     return () => setCanceled(true);
   }, []); // define o cancelado como verdadeiro ao sair da pagina
 
-  return { products, loading, error };
+  return { documents, loading, error };
 };

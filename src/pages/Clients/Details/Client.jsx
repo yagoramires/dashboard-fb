@@ -1,12 +1,12 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDeleteDocument } from '../../../hooks/useDeleteDocument';
-import { useFetchProduct } from '../../../hooks/useFetchProduct';
+import { useFetchDocument } from '../../../hooks/useFetchDocument';
 
 import styles from './Client.module.scss';
 
 const Client = () => {
   const { id } = useParams();
-  const { product } = useFetchProduct('products', id);
+  const { document: client } = useFetchDocument('clients', id);
 
   const { deleteDocument } = useDeleteDocument('products');
 
@@ -19,7 +19,7 @@ const Client = () => {
 
   return (
     <section className={styles.product}>
-      {product && (
+      {/* {product && (
         <>
           <img src={product.productImage} alt={product.productName} />
 
@@ -54,7 +54,7 @@ const Client = () => {
             </div>
           </div>
         </>
-      )}
+      )} */}
     </section>
   );
 };

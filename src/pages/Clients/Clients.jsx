@@ -1,41 +1,44 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useFetchProducts } from '../../hooks/useFetchProducts';
+// Hooks
+import { useFetchDocuments } from '../../hooks/useFetchDocuments';
 
-import ProductsTable from '../../components/ProductsTable/ProductsTable';
+// Components
+import ClientsTable from '../../components/ClientsTable/ClientsTable';
 
+// Styles
 import styles from './Clients.module.scss';
 
 const Clients = () => {
   const [query, setQuery] = useState();
   const [searchResult, setSearchResult] = useState('');
 
-  const navigate = useNavigate();
+  const { documents: clients, loading } = useFetchDocuments('clients');
 
-  const { products, loading } = useFetchProducts('products');
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setSearchResult('');
 
     if (query) {
-      const searchName = products.filter((product) =>
-        product.productName.toLowerCase().includes(query.toLowerCase()),
+      const searchName = clients.filter((client) =>
+        client.socialName.toLowerCase().includes(query.toLowerCase()),
       );
-      const searchCode = products.filter((product) =>
-        product.productCode.toLowerCase().includes(query.toLowerCase()),
+      const searchCode = clients.filter((client) =>
+        client.code.toLowerCase().includes(query.toLowerCase()),
       );
-      const searchModel = products.filter((product) =>
-        product.productModel.toLowerCase().includes(query.toLowerCase()),
+      const searchCnpj = clients.filter((client) =>
+        client.cnpj.includes(query),
       );
 
       if (searchName.length > 0) {
         setSearchResult(searchName);
       } else if (searchCode.length > 0) {
         setSearchResult(searchCode);
-      } else if (searchModel.length > 0) {
-        setSearchResult(searchModel);
+      } else if (searchCnpj.length > 0) {
+        setSearchResult(searchCnpj);
       }
     }
     setQuery('');
@@ -56,15 +59,15 @@ const Clients = () => {
           type='text'
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder='Pesquise por produtos'
+          placeholder='Pesquise por clientes'
         />
         <input type='submit' value='Buscar' className='btn' />
       </form>
 
-      {!products && (
+      {!clients && (
         <div className='nopost'>
           <p>Nenhum cliente cadatrado.</p>
-          <button onClick={() => navigate('/products/new')} className='btn'>
+          <button onClick={() => navigate('/clients/new')} className='btn'>
             Cadastrar
           </button>
         </div>
@@ -75,7 +78,7 @@ const Clients = () => {
           <p onClick={() => setSearchResult('')} className='cleanSearch'>
             Limpar Busca
           </p>
-          <ProductsTable products={searchResult} />
+          <ClientsTable clients={searchResult} />
         </>
       )}
 
@@ -86,9 +89,9 @@ const Clients = () => {
         </>
       )}
 
-      {products && !searchResult && (
+      {clients && !searchResult && (
         <>
-          <ProductsTable products={products} />
+          <ClientsTable clients={clients} />
         </>
       )}
     </section>

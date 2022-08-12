@@ -1,13 +1,15 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { useDeleteDocument } from '../../../hooks/useDeleteDocument';
-import { useFetchProduct } from '../../../hooks/useFetchProduct';
 
+// Hooks
+import { useDeleteDocument } from '../../../hooks/useDeleteDocument';
+import { useFetchDocument } from '../../../hooks/useFetchDocument';
+
+// Styles
 import styles from './Product.module.scss';
 
 const Product = () => {
   const { id } = useParams();
-  const { product } = useFetchProduct('products', id);
-
+  const { document: product } = useFetchDocument('products', id);
   const { deleteDocument } = useDeleteDocument('products');
 
   const navigate = useNavigate();

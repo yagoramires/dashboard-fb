@@ -149,3 +149,12 @@ section .error {
   width: 100%;
   gap: 2rem;
 }
+
+.buttonsContainer {
+  @include flex-center;
+  flex-direction: row;
+  margin-top: 2rem;
+  align-self: center;
+  gap: 1rem;
+  width: 200px;
+}
